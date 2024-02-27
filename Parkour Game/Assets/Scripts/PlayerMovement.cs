@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    //[Header("HeaderName")]
+
     // Player Movement
     public float movementSpeed;
     public float rotationSpeed;
@@ -17,13 +20,18 @@ public class PlayerMovement : MonoBehaviour
     // Rigidbogy
     public Rigidbody rb;
 
+    // Animator
+    public Animator anim;
+
     // Player Identification
     public enum Players { player1, player2 }
     public Players player;
 
-    // Start is called before the first frame update
+    // Start is called before the first frame updates
     public void Start()
     {
+        anim = GetComponentInChildren<Animator>();
+
         Debug.Log("PlayerMovement.cs loaded successfully");
 
         canDash = true;
@@ -43,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rotationInput = Input.GetAxis("Horizontal") * rotationSpeed;
             movementInput = Input.GetAxis("Vertical");
+            
         }
         else
         {
@@ -50,11 +59,19 @@ public class PlayerMovement : MonoBehaviour
             movementInput = Input.GetAxis("Vertical2");
         }
 
+        if (movementInput != 0)
+        {
+            anim.SetBool("IsMoving", true);
+        }
+        else
+        {
+            anim.SetBool("IsMoving", false);
+        }
 
         // if the key is pressed
         MovePlayer(movementInput);
         RotatePlayer(rotationInput);
-
+        //anim.SetBool("IsMoving", false);
         /*
         Vector3 cameraX = Camera.main.transform.right;
         Vector3 cameraZ = Vector3.Cross(cameraX, Vector3.up);
@@ -81,9 +98,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void MovePlayer(float movementInput)
     {
+        anim.SetFloat("XInput", movementInput);
+
         Vector3 movement = new Vector3(movementInput, 0f, 0f) * movementSpeed * Time.deltaTime;
         transform.Translate(movement);
 
+        //anim.SetFloat("XInput", animVel)
         // transform.position += transform.forward * movementSpeed * Time.deltaTime;
     }
 

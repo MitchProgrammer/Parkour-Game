@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{046DFE65-BE0A-377D-47BF-499E10487405}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../../../Soccer Game/Assets/Scripts/PlayerMovement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CameraZoom.cs">
     <Files>
-      <File FileName="../../../../Soccer Game/Assets/Scripts/PlayerMovement.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/PlayerMovement.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PlayerMovement.cs" Line="30" Column="54" />
+      <File FileName="Assets/Scripts/CameraZoom.cs" Line="21" Column="9" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -10,7 +10,7 @@
           <Node name="Parkour Game" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="PlayerMovement.cs" selected="True" />
+                <Node name="CameraZoom.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -20,7 +20,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="95df463a-8fd7-4b90-96a8-243e5fc5bd80" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="cd6c09e4-b198-480d-87aa-6067a5876d07" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -11,9 +11,6 @@ public class PlayerMovement : MonoBehaviour
     public float movementSpeed;
     public float rotationSpeed;
 
-    public bool canDash;
-    public float dashCooldown;
-
     public float rotationInput;
     public float movementInput;
 
@@ -33,16 +30,6 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
 
         Debug.Log("PlayerMovement.cs loaded successfully");
-
-        canDash = true;
-    }
-
-    public void Update()
-    {
-        if (Input.GetKey(KeyCode.Space) && canDash)
-        {
-            StartCoroutine(Dash());
-        }
     }
 
     public void FixedUpdate()
@@ -71,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
         // if the key is pressed
         MovePlayer(movementInput);
         RotatePlayer(rotationInput);
+
         //anim.SetBool("IsMoving", false);
         /*
         Vector3 cameraX = Camera.main.transform.right;
@@ -79,21 +67,6 @@ public class PlayerMovement : MonoBehaviour
         inputDirection = camerX * x + cameraZ * y;
         inputDirection.Normalise();
         */
-    }
-
-    public IEnumerator Dash()
-    {
-        movementSpeed += 5;
-
-        canDash = false;
-
-        yield return new WaitForSeconds(1);
-
-        movementSpeed -= 5;
-
-        yield return new WaitForSeconds(dashCooldown);
-
-        canDash = true;
     }
 
     public void MovePlayer(float movementInput)

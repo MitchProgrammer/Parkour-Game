@@ -9,17 +9,36 @@ public class Weapon : MonoBehaviour
     public float fireRate = 0.5f; // Rate of fire (bullets per second)
     private float nextFireTime; // Time when the next bullet can be fired
 
+    public enum Players { player1, player2 }
+    public Players player;
+
     void Update()
     {
-        // Check if it's time to fire
-        if (Input.GetButton("Fire1") && Time.time >= nextFireTime)
+        if (player == Players.player1)
         {
-            // Set the time for the next bullet
-            nextFireTime = Time.time + 1f / fireRate;
+            // Check if it's time to fire
+            if (Input.GetKey(KeyCode.Q) && Time.time >= nextFireTime)
+            {
+                // Set the time for the next bullet
+                nextFireTime = Time.time + 1f * fireRate;
 
-            // Fire the bullet
-            Fire();
+                // Fire the bullet
+                Fire();
+            }
         }
+        else if (player == Players.player2)
+        {
+            // Check if it's time to fire
+            if (Input.GetKey(KeyCode.RightShift) && Time.time >= nextFireTime)
+            {
+                // Set the time for the next bullet
+                nextFireTime = Time.time + 1f * fireRate;
+
+                // Fire the bullet
+                Fire();
+            }
+        }
+        
     }
 
     void Fire()

@@ -18,6 +18,7 @@ public class VoidChecker : MonoBehaviour
         if (transform.position.y < minYLevel)
         {
             transform.position += 2 * Mathf.Abs(minYLevel) * Vector3.up;
+            transform.position = new Vector3(0f, transform.position.y, 0f);
         }
     }
 }

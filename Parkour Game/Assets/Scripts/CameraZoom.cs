@@ -19,7 +19,7 @@ public class CameraZoom : MonoBehaviour
         float distanceBetweenX = (player1.transform.position.x + player2.transform.position.x) / 2;
         float distanceBewteenZ = (player1.transform.position.x + player2.transform.position.x) / 2;
 
-        float cameraPos = 10 + (Mathf.Sqrt(3 * distance));
+        float cameraPos = 15 + (Mathf.Sqrt(3 * distance));
 
         float xCameraPos = distanceBetweenX;
         float yCameraPos = cameraPos;

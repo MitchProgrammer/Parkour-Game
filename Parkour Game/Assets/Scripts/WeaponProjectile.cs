@@ -5,8 +5,8 @@ using UnityEngine;
 public class WeaponProjectile : MonoBehaviour
 {
     public float speed = 10f; // Speed of the projectile
-    public float explosionRadius = 3f; // Radius of the explosion force
-    public float explosionForce = 10f; // Force of the explosion
+    public float explosionRadius = 1f; // Radius of the explosion force
+    public float explosionForce = 2f; // Force of the explosion
     public GameObject explosionPrefab; // Prefab of the explosion effect
 
     void Start()
@@ -25,7 +25,7 @@ public class WeaponProjectile : MonoBehaviour
     void Explode()
     {
         // Instantiate the explosion prefab at the projectile's position
-        //Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
         // Detect nearby colliders within the explosion radius
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);

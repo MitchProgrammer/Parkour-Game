@@ -58,9 +58,11 @@
     <Compile Include="Assets\Scripts\FloorFinder.cs" />
     <Compile Include="Assets\Scripts\CameraZoom.cs" />
     <Compile Include="Assets\Scripts\WeaponProjectile.cs" />
+    <Compile Include="Assets\Scripts\LandingPos.cs" />
     <Compile Include="Assets\Scripts\VoidChecker.cs" />
     <Compile Include="Assets\Scripts\Weapon.cs" />
     <Compile Include="Assets\Scripts\RotationCheck.cs" />
+    <Compile Include="Assets\Scripts\PixelationEffect.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
   </ItemGroup>
   <ItemGroup>

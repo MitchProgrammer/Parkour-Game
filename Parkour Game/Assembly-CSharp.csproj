@@ -55,17 +55,16 @@
     <UnityVersion>2022.3.18f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Game Manager\GamePlayManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerIdentity.cs" />
     <Compile Include="Assets\Scripts\Player\PixelationEffect.cs" />
     <Compile Include="Assets\Scripts\Player\WeaponProjectile.cs" />
     <Compile Include="Assets\Scripts\Camera\LandingPos.cs" />
     <Compile Include="Assets\Scripts\Player\Weapon.cs" />
-    <Compile Include="Assets\Scripts\Player\VoidChecker.cs" />
     <Compile Include="Assets\Scripts\Player\FloorFinder.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraZoom.cs" />
     <Compile Include="Assets\Scripts\Player\RotationCheck.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\GamePlayManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

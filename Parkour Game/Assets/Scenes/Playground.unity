@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 219887471}
   - component: {fileID: 219887470}
   - component: {fileID: 219887475}
+  - component: {fileID: 219887476}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -177,7 +178,7 @@ MonoBehaviour:
   checkDistance: 0.2
   rb: {fileID: 219887473}
   jumpForce: 1
-  player: 1
+  PI: {fileID: 219887476}
 --- !u!114 &219887472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +197,7 @@ MonoBehaviour:
   movementInput: 0
   rb: {fileID: 219887473}
   anim: {fileID: 0}
-  player: 1
+  PI: {fileID: 219887476}
 --- !u!54 &219887473
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -255,6 +256,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 219887473}
+--- !u!114 &219887476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219887469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29ac141bff4e27b4aa4fc755d374a4b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: 1
 --- !u!1 &284869540
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,7 +411,7 @@ MonoBehaviour:
   checkDistance: 0.2
   rb: {fileID: 529467523}
   jumpForce: 1
-  player: 0
+  PI: {fileID: 529467527}
 --- !u!114 &529467522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,7 +430,7 @@ MonoBehaviour:
   movementInput: 0
   rb: {fileID: 529467523}
   anim: {fileID: 0}
-  player: 0
+  PI: {fileID: 529467527}
 --- !u!54 &529467523
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -497,9 +511,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 529467520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd547dc00c235a64e98893129230f3f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 29ac141bff4e27b4aa4fc755d374a4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
 --- !u!1 &655734542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1538,7 +1553,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 653450017255667668, guid: 5700250153799e84897ec317ee42aadd, type: 3}
   bulletSpawnPoint: {fileID: 1640811933}
   fireRate: 0.5
-  player: 0
+  PI: {fileID: 529467527}
 --- !u!1 &1306030692
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,7 +1602,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 653450017255667668, guid: 5700250153799e84897ec317ee42aadd, type: 3}
   bulletSpawnPoint: {fileID: 284869541}
   fireRate: 0.5
-  player: 1
+  PI: {fileID: 219887476}
 --- !u!4 &1511316615 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f791217b6bf7147a8b1e5be4ce75a002, type: 3}

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PixelationEffect : MonoBehaviour
 {
-    public int pixelSize = 2; // Adjust this value to change the pixelation level
+    [Range(1, 64)]
+    public int pixelSize; // Adjust this value to change the pixelation level
 
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {

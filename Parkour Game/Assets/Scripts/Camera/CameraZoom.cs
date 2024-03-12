@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class CameraZoom : MonoBehaviour
 {
-
-    public GameObject player1;
-    public GameObject player2;
+    [HideInInspector] public GameObject player1; 
+    [HideInInspector] public GameObject player2; 
+    
+    public void Start()
+    {
+        player1 = GamePlayManager.gmpInstance.player1Object;
+        player2 = GamePlayManager.gmpInstance.player2Object;
+    }
 
     // Update is called once per frame
     void FixedUpdate()

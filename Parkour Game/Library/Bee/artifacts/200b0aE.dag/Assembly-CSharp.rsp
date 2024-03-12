@@ -368,6 +368,7 @@
 "Assets/Scripts/Player/RotationCheck.cs"
 "Assets/Scripts/Player/Weapon.cs"
 "Assets/Scripts/Player/WeaponProjectile.cs"
+"Assets/Scripts/Scene.cs"
 -langversion:9.0
 
 /deterministic

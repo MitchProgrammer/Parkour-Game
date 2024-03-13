@@ -163,20 +163,21 @@ public class GamePlayManager : MonoBehaviour
     // Game Loop
     public void GameLoop()
     {
-        // Only executes function if the gamestate is running
-        if (state == GameState.Running)
-        {
-            // Checks if player falls in void, hence, has died and grants score to apponent
-            voidCheck();
-
-            // Only executes if a player has hit the maxScore
-            if (player1Score >= maxScore || player2Score >= maxScore) state = GameState.End;
-
-            // Updates timer
-            UpdateTimer();
-        }
-
         if (state == GameState.End) EndGame();
+
+        // Only executes function if the gamestate is running
+        if (state != GameState.Running) return;
+
+        // Checks if player falls in void, hence, has died and grants score to apponent
+        voidCheck();
+
+        // Only executes if a player has hit the maxScore
+        if (player1Score >= maxScore || player2Score >= maxScore) state = GameState.End;
+
+        // Updates timer
+        UpdateTimer();
+
+        
     }
 
     // Checks if player has fallen into the void

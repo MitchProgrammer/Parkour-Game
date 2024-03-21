@@ -15,7 +15,7 @@ public class Scene : MonoBehaviour
     {
         yield return new WaitForSeconds(4);
 
-        SceneManager.LoadScene("Playground");
+        SceneManager.LoadScene("MainMenu");
 
         yield return null;
     }

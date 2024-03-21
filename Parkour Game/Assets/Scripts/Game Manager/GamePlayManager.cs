@@ -77,6 +77,16 @@ public class GamePlayManager : MonoBehaviour
     // Start Game Setup
     public void Start()
     {
+        // If a Gamemaster exists, then use its data
+        if (GameMaster.instance != null)
+        {
+            maxScore = GameMaster.instance.saveData.maxKills;
+            gameDuration = GameMaster.instance.saveData.maxRoundTime;
+
+            player1Name = GameMaster.instance.currentPlayer1.playerName;
+            player2Name = GameMaster.instance.currentPlayer2.playerName;
+        }
+
         state = GameState.Intro;
         SetupGame();
     }
@@ -223,8 +233,8 @@ public class GamePlayManager : MonoBehaviour
     public void UpdateScore(string player)
     {
         // Gives the winning player +1 score
-        if (playerScored == "player1") player1Score += scorePerKill;
-        else player2Score += scorePerKill;
+        if (playerScored == "player1") { GameMaster.instance.currentPlayer1.kills += scorePerKill; player1Score += scorePerKill; }
+        else { GameMaster.instance.currentPlayer2.kills += scorePerKill; player2Score += scorePerKill; }
 
         // Updates Score
         scoreText.text = $"{player1Score} | {player2Score}";
@@ -269,6 +279,9 @@ public class GamePlayManager : MonoBehaviour
 
     public void EndGame()
     {
+        GameMaster.instance.SortTempList(GameMaster.instance.tempPlayers, true);
+        GameMaster.instance.SaveGame();
+
         SceneManager.LoadScene("EndScene");
     }
 }

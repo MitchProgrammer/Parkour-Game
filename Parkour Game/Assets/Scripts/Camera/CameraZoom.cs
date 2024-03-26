@@ -5,13 +5,16 @@ using UnityEngine;
 public class CameraZoom : MonoBehaviour
 {
     [HideInInspector] public GameObject player1; 
-    [HideInInspector] public GameObject player2; 
-    
-    public void Start()
+    [HideInInspector] public GameObject player2;
+
+    #region singleton
+    public static CameraZoom instance;
+
+    private void Awake()
     {
-        player1 = GamePlayManager.gmpInstance.player1Object;
-        player2 = GamePlayManager.gmpInstance.player2Object;
+        instance = this;
     }
+    #endregion
 
     // Update is called once per frame
     void FixedUpdate()

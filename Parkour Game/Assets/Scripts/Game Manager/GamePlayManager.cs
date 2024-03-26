@@ -66,11 +66,11 @@ public class GamePlayManager : MonoBehaviour
     #endregion
 
     #region singleton
-    public static GamePlayManager gmpInstance;
+    public static GamePlayManager instance;
 
     private void Awake()
     {
-        gmpInstance = this;
+        instance = this;
     }
     #endregion
 
@@ -89,11 +89,12 @@ public class GamePlayManager : MonoBehaviour
 
         state = GameState.Intro;
         SetupGame();
+        StartCoroutine(IntroSequence());
     }
 
     // Setup Game
     public void SetupGame()
-    {
+    { 
         // Spawn Players
         player1Object = Instantiate(player1Prefab, player1Spawnpoint.position, player1Spawnpoint.rotation);
         player2Object = Instantiate(player2Prefab, player2Spawnpoint.position, player2Spawnpoint.rotation);
@@ -101,6 +102,10 @@ public class GamePlayManager : MonoBehaviour
         // Freeze Players
         player1Object.GetComponent<PlayerMovement>().enabled = false;
         player2Object.GetComponent<PlayerMovement>().enabled = false;
+
+        // Getting players
+        CameraZoom.instance.player1 = player1Object;
+        CameraZoom.instance.player2 = player2Object;
 
         StartCoroutine(IntroSequence());
     }
@@ -152,11 +157,11 @@ public class GamePlayManager : MonoBehaviour
         timer = gameDuration;
 
         // Updates Player Names
-        if (player1Name == "") player1Name = "Player1";
-        if (player2Name == "") player2Name = "Player2";
+        //if (player1Name == "") player1Name = "Player1";
+        //if (player2Name == "") player2Name = "Player2";
 
         // Sets score of both players to zero
-        scoreText.text = $"{player1Score} | {player2Score}";
+        scoreText.text = $"{player1Name} - {player1Score} | {player2Name} - {player2Score}";
 
         // Sets timer to gameDuration length
         timerText.text = $"{gameDuration}";

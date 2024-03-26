@@ -25,7 +25,7 @@ public class LobbyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (GameMaster.instance.saveData.lastPlayerNames[0] == "")
+        if (GameMaster.instance.saveData.lastPlayerNames[0] == null)
         {
             player1Name.text = "Insert Player Name";
         }
@@ -33,7 +33,7 @@ public class LobbyManager : MonoBehaviour
         {
             player1Name.text = GameMaster.instance.saveData.playerNames[0];
         }
-        if (GameMaster.instance.saveData.lastPlayerNames[1] == "")
+        if (GameMaster.instance.saveData.lastPlayerNames[1] == null)
         {
             player2Name.text = "Insert Player Name";
         }
@@ -44,6 +44,7 @@ public class LobbyManager : MonoBehaviour
         maxKills.text = GameMaster.instance.saveData.maxKills.ToString();
         maxTime.text = GameMaster.instance.saveData.maxRoundTime.ToString();
     }
+
     public void UpdatePlayerName(int playerNum)
     {
         if (playerNum == 1)

@@ -46,7 +46,7 @@ public class SaveSystem : MonoBehaviour
         return saveData;
 
            
-        // If the file does not exist, return an error message and cancle the function
+        // If the file does not exist, return an error message and cancel the function
 
     }
 }

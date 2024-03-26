@@ -7,16 +7,6 @@ public class GameMaster : MonoBehaviour
 {
     public GameData saveData;
 
-    #region Singleton
-    public static GameMaster instance;
-
-    private void Awake()
-    {
-        if (instance == null) { instance = this; DontDestroyOnLoad(gameObject); }
-        else Destroy(gameObject);
-    }
-    #endregion
-
     // Refrence to current players
     [HideInInspector] public PlayerData currentPlayer1, currentPlayer2;
 
@@ -27,10 +17,23 @@ public class GameMaster : MonoBehaviour
     public bool debugButtons;
     public bool loadOnStart = true;
 
+    #region Singleton
+    public static GameMaster instance;
+
+    private void Awake()
+    {
+        if (instance == null) { instance = this; DontDestroyOnLoad(gameObject); }
+        else Destroy(gameObject);
+    }
+    #endregion
 
     public void Start()
     {
-        
+        currentPlayer1 = new PlayerData();
+        currentPlayer2 = new PlayerData();
+
+        if (loadOnStart) LoadGame();
+        else { saveData = new GameData(); CreateTempList(); }  
     }
 
     // Create temp list of all players, filled in with save data
@@ -112,7 +115,7 @@ public class GameMaster : MonoBehaviour
         SaveHighScoreData(tempPlayers);
 
         saveData.lastPlayerNames[0] = currentPlayer1.playerName;
-        saveData.lastPlayerNames[0] = currentPlayer2.playerName;
+        saveData.lastPlayerNames[1] = currentPlayer2.playerName;
 
         SaveSystem.instance.SaveGame(saveData);
     }

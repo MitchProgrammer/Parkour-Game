@@ -190,9 +190,9 @@ public class GameMaster : MonoBehaviour
                 player.playerName += glyphs[Random.Range(0, glyphs.Length)];
             }
             //generate random Kills score
-            player.kills = Random.Range(0, 20);
+            player.kills = Random.Range(0, 5);
             //generate random deaths
-            player.deaths = Random.Range(0, 20);
+            player.deaths = Random.Range(0, 5);
             //calculate kd
             if (player.deaths == 0) player.kdr = player.kills;
             else player.kdr = player.kills / player.deaths;

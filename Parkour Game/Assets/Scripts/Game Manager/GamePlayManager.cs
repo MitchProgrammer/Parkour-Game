@@ -242,7 +242,7 @@ public class GamePlayManager : MonoBehaviour
         else { GameMaster.instance.currentPlayer2.kills += scorePerKill; player2Score += scorePerKill; }
 
         // Updates Score
-        scoreText.text = $"{player1Score} | {player2Score}";
+        scoreText.text = $"{player1Name} {player1Score} | {player2Name} {player2Score}";
     }
 
     //Updates timer
@@ -287,6 +287,18 @@ public class GamePlayManager : MonoBehaviour
         GameMaster.instance.SortTempList(GameMaster.instance.tempPlayers, true);
         GameMaster.instance.SaveGame();
 
-        SceneManager.LoadScene("EndScene");
+        alertText.enabled = true;
+
+        if (player1Score > player2Score) alertText.text = $"{player1Name} Wins!";
+        if (player2Score > player1Score) alertText.text = $"{player2Name} Wins!";
+        if (player1Score == player2Score) alertText.text = "It's a draw!";
+
+        StartCoroutine(ReturnToMainMenu());
+    }
+
+    public IEnumerator ReturnToMainMenu()
+    {
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene("MainMenu");
     }
 }

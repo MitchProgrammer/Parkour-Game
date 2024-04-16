@@ -8,4 +8,6 @@ public class PlayerData
     public int kills;
     public int deaths;
     public float kdr;
+
+    public float maxGameDuration;
 }

@@ -446,7 +446,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 830306306}
         m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
-        m_MethodName: EnableBools
+        m_MethodName: DisableBools
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -561,6 +561,10 @@ PrefabInstance:
     - target: {fileID: 12033168271037877, guid: c32a6b7f54d974242a8cbae7b39a2523, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 107030499456814606, guid: c32a6b7f54d974242a8cbae7b39a2523, type: 3}
+      propertyPath: m_Interactable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 445798280444843718, guid: c32a6b7f54d974242a8cbae7b39a2523, type: 3}
       propertyPath: m_Name
@@ -881,6 +885,10 @@ PrefabInstance:
     - target: {fileID: 4094582763107304388, guid: c32a6b7f54d974242a8cbae7b39a2523, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5887396932829178071, guid: c32a6b7f54d974242a8cbae7b39a2523, type: 3}
+      propertyPath: m_Interactable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7235057540748704552, guid: c32a6b7f54d974242a8cbae7b39a2523, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1579,7 +1587,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 830306306}
         m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
-        m_MethodName: EnableBools
+        m_MethodName: DisableBools
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

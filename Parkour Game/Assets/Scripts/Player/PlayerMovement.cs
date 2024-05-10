@@ -81,10 +81,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void RotatePlayer(float rotationInput)
     {
-        if (movementInput == 0)
-        {
-            return;
-        }
         // Quaternion target = Quaternion.Euler(0f, rotation, 0f);
         // transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
         transform.Rotate(0f, rotationInput, 0f);

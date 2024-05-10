@@ -104,8 +104,8 @@ public class GamePlayManager : MonoBehaviour
         player2Object.GetComponent<PlayerMovement>().enabled = false;
 
         // Getting players
-        CameraZoom.instance.player1 = player1Object;
-        CameraZoom.instance.player2 = player2Object;
+        //CameraZoom.instance.player1 = player1Object;
+        //CameraZoom.instance.player2 = player2Object;
 
         StartCoroutine(IntroSequence());
     }

@@ -11,14 +11,20 @@ public class PlayerMovement : MonoBehaviour
     public float movementSpeed;
     public float rotationSpeed;
 
-    public float rotationInput;
-    public float movementInput;
+    public float movementInputX;
+    public float movementInputZ;
 
     // Rigidbogy
     public Rigidbody rb;
 
     // Animator
     public Animator anim;
+
+    // Players
+    [HideInInspector]
+    public GameObject player1;
+    [HideInInspector]
+    public GameObject player2;
 
     // Player Identification
     public PlayerIdentity PI;
@@ -28,6 +34,9 @@ public class PlayerMovement : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
 
+        player1 = GameObject.FindGameObjectWithTag("Player1");
+        player2 = GameObject.FindGameObjectWithTag("Player2");
+
         Debug.Log("PlayerMovement.cs loaded successfully");
     }
 
@@ -35,17 +44,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if (PI.player == PlayerIdentity.Players.player1)
         {
-            rotationInput = Input.GetAxis("Horizontal") * rotationSpeed;
-            movementInput = Input.GetAxis("Vertical");
+            movementInputX = Input.GetAxis("Horizontal") * rotationSpeed;
+            movementInputZ = Input.GetAxis("Vertical");
             
         }
         else
         {
-            rotationInput = Input.GetAxis("Horizontal2") * rotationSpeed;
-            movementInput = Input.GetAxis("Vertical2");
+            movementInputX = Input.GetAxis("Horizontal2") * rotationSpeed;
+            movementInputZ = Input.GetAxis("Vertical2");
         }
 
-        if (movementInput != 0)
+        if (movementInputX != 0 || movementInputZ != 0)
         {
             anim.SetBool("IsMoving", true);
         }
@@ -55,8 +64,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // if the key is pressed
-        MovePlayer(movementInput);
-        RotatePlayer(rotationInput);
+        MovePlayer(movementInputX, movementInputZ);
+        RotatePlayer();
 
         //anim.SetBool("IsMoving", false);
         /*
@@ -68,26 +77,42 @@ public class PlayerMovement : MonoBehaviour
         */
     }
 
-    public void MovePlayer(float movementInput)
+    public void MovePlayer(float movementInputX, float movementInputZ)
     {
-        anim.SetFloat("XInput", movementInput);
+        anim.SetFloat("XInput", movementInputX);
 
-        Vector3 movement = new Vector3(movementInput, 0f, 0f) * movementSpeed * Time.deltaTime;
-        transform.Translate(movement);
+        // Calculate movement direction based on world axes
+        Vector3 movementDirection = new Vector3(movementInputX, 0f, movementInputZ).normalized;
+
+        // Move the player in the direction of the calculated movement direction
+        rb.MovePosition(transform.position + movementDirection * movementSpeed * Time.deltaTime);
 
         //anim.SetFloat("XInput", animVel)
         // transform.position += transform.forward * movementSpeed * Time.deltaTime;
     }
 
-    public void RotatePlayer(float rotationInput)
+    public void RotatePlayer()
     {
-        if (movementInput == 0)
+        if (PI.player == PlayerIdentity.Players.player1)
         {
-            return;
+            Vector3 targetDirection = player2.transform.position;
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 5f);
         }
+
+        if (PI.player == PlayerIdentity.Players.player2)
+        {
+            Vector3 targetDirection = player1.transform.position;
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 5f);
+        }
+
+        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+
+
         // Quaternion target = Quaternion.Euler(0f, rotation, 0f);
         // transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
-        transform.Rotate(0f, rotationInput, 0f);
+        //transform.Rotate(0f, rotationInput, 0f);
 
         /*
         Quaternion targetDir = Quaternion.LookRotation(inputDirection);

@@ -4927,7 +4927,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5737297829499460370, guid: 546dc2ef00c2048f6bd56d794554c0ae, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: OnlineMenu
+      value: ConnectToServer
       objectReference: {fileID: 0}
     - target: {fileID: 5737297829499460370, guid: 546dc2ef00c2048f6bd56d794554c0ae, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName

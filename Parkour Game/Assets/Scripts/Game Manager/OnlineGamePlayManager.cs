@@ -5,20 +5,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GamePlayManager : MonoBehaviour
+public class OnlineGamePlayManager : MonoBehaviour
 {
     #region Variables
 
     //Player Identification
     [Header("Player Identification")]
 
-    [HideInInspector] public GameObject player1Object;
-    [HideInInspector] public GameObject player2Object;
+    [HideInInspector] public GameObject player1ObjectOnline = null;
+    [HideInInspector] public GameObject player2ObjectOnline = null;
 
-
-    public GameObject player1Prefab;
-    public GameObject player2Prefab;
-
+    public GameObject onlinePlayerPrefab;
 
     public string player1Name;
     public string player2Name;
@@ -71,7 +68,7 @@ public class GamePlayManager : MonoBehaviour
     #endregion
 
     #region singleton
-    public static GamePlayManager instance;
+    public static OnlineGamePlayManager instance;
 
     private void Awake()
     {
@@ -95,33 +92,34 @@ public class GamePlayManager : MonoBehaviour
         }
 
         state = GameState.Intro;
-        
 
-        SetupGame();
+        player1ObjectOnline = null;
+        player2ObjectOnline = null;
+
+        view.RPC("SetupGame", RpcTarget.All);
 
     }
 
     // Setup Game
     [PunRPC]
     public void SetupGame()
-    { 
+    {
+        // Check if the local player is player 1 and instantiate only if the object doesn't already exist
+        if (PhotonNetwork.LocalPlayer.ActorNumber == 1 && player1ObjectOnline == null)
+        {
+            player1ObjectOnline = PhotonNetwork.Instantiate(onlinePlayerPrefab.name, player1Spawnpoint.position, Quaternion.identity);
+        }
+        // Check if the local player is player 2 and instantiate only if the object doesn't already exist
+        else if (PhotonNetwork.LocalPlayer.ActorNumber == 2 && player2ObjectOnline == null)
+        {
+            player2ObjectOnline = PhotonNetwork.Instantiate(onlinePlayerPrefab.name, player2Spawnpoint.position, Quaternion.identity);
+        }
 
-        // Spawn Players
-        player1Object = Instantiate(player1Prefab, player1Spawnpoint.position, player1Spawnpoint.rotation);
-        player2Object = Instantiate(player2Prefab, player2Spawnpoint.position, player2Spawnpoint.rotation);
-
-        // Freeze Players
-        player1Object.GetComponent<PlayerMovement>().enabled = false;
-        player2Object.GetComponent<PlayerMovement>().enabled = false;
-
-        // Getting players
-        //CameraZoom.instance.player1 = player1Object;
-        //CameraZoom.instance.player2 = player2Object;
-
-        StartCoroutine(IntroSequence());
+        view.RPC("IntroSequence", RpcTarget.All);
     }
 
     // Start Countdown
+    [PunRPC]
     public IEnumerator IntroSequence()
     {
         alertText.text = "Get Ready!";
@@ -147,14 +145,10 @@ public class GamePlayManager : MonoBehaviour
         
         alertText.enabled = false;
 
-        // Unfreeze Players
-        player1Object.GetComponent<PlayerMovement>().enabled = true;
-        player2Object.GetComponent<PlayerMovement>().enabled = true;
-        
-        RunGame();
+        view.RPC("RunGame", RpcTarget.All);
     }
 
-
+    [PunRPC]
     public void RunGame()
     {
         // Sets default scores to zero
@@ -184,10 +178,11 @@ public class GamePlayManager : MonoBehaviour
 
     public void Update()
     {
-        GameLoop();
+        view.RPC("GameLoop", RpcTarget.All);
     }
 
     // Game Loop
+    [PunRPC]
     public void GameLoop()
     {
         if (state == GameState.End) EndGame();
@@ -201,52 +196,58 @@ public class GamePlayManager : MonoBehaviour
         if (player1Score >= maxScore || player2Score >= maxScore) state = GameState.End;
 
         // Updates timer
-        UpdateTimer();
-
-        
+        view.RPC("UpdateTimer", RpcTarget.All);
     }
 
     // Checks if player has fallen into the void
+    [PunRPC]
     public void voidCheck()
     {
-        if (player1Object.transform.position.y < respawnThreshold)
+        // Check if player1ObjectOnline is not null before accessing its transform
+        if (player1ObjectOnline != null && player1ObjectOnline.transform.position.y < respawnThreshold)
         {
             playerDied = PlayerIdentity.Players.player1.ToString();
             playerScored = PlayerIdentity.Players.player2.ToString();
         }
-        else if (player2Object.transform.position.y < respawnThreshold)
+        // Check if player2ObjectOnline is not null before accessing its transform
+        else if (player2ObjectOnline != null && player2ObjectOnline.transform.position.y < respawnThreshold)
         {
             playerDied = PlayerIdentity.Players.player2.ToString();
             playerScored = PlayerIdentity.Players.player1.ToString();
         }
-        else playerDied = playerScored = null;
+        else
+        {
+            playerDied = playerScored = null;
+        }
 
-        // Calls KillCheck() with data of both players
-        KillCheck(playerDied, playerScored);   
+        if (playerDied != null && playerScored != null)
+        {
+            view.RPC("KillCheck", RpcTarget.All, playerDied, playerScored);
+        }
     }
 
     // Checks which player made the "kill" and which player "died"
+    [PunRPC]
     public void KillCheck(string playedDied, string playerScored)
     {
         if (playerDied == null || playerScored == null) return;
 
-        // Respawns dead player
-        RespawnPlayer(playerDied);
-
-        // Calls UpdateScore() to update the score with passthrough variable of winner
-        UpdateScore(playerScored);
+        view.RPC("RespawnPlayer", RpcTarget.All, playerDied);
+        view.RPC("UpdateScore", RpcTarget.All, playerScored);
 
     }
 
     // Respawns Player that died due to the void
+    [PunRPC]
     public void RespawnPlayer(string player)
     {
         // Teleports player back to the spawn position which is (0, 40, 0)
-        if (player == "player1") player1Object.transform.position = new Vector3(0f, 40f, 0f);
-        else player2Object.transform.position = new Vector3(0f, 40f, 0f);
+        if (PhotonNetwork.LocalPlayer.ActorNumber == 1) player1ObjectOnline.transform.position = new Vector3(0f, 40f, 0f);
+        else if (PhotonNetwork.LocalPlayer.ActorNumber == 2) player2ObjectOnline.transform.position = new Vector3(0f, 40f, 0f);
     }
 
     // Updates score to add +1 score to the player that "killed"
+    [PunRPC]
     public void UpdateScore(string player)
     {
         // Gives the winning player +1 score
@@ -258,6 +259,7 @@ public class GamePlayManager : MonoBehaviour
     }
 
     //Updates timer
+    [PunRPC]
     public void UpdateTimer()
     {
         // Sets the previous time to a variable to calculate difference in time
@@ -294,6 +296,7 @@ public class GamePlayManager : MonoBehaviour
         timerText.text = $"{displayTime}";
     }
 
+    [PunRPC]
     public void EndGame()
     {
         GameMaster.instance.SortTempList(GameMaster.instance.tempPlayers, true);
@@ -305,9 +308,10 @@ public class GamePlayManager : MonoBehaviour
         if (player2Score > player1Score) alertText.text = $"{player2Name} Wins!";
         if (player1Score == player2Score) alertText.text = "It's a draw!";
 
-        StartCoroutine(ReturnToMainMenu());
+        view.RPC("ReturnToMainMenu", RpcTarget.All);
     }
 
+    [PunRPC]
     public IEnumerator ReturnToMainMenu()
     {
         yield return new WaitForSeconds(5);

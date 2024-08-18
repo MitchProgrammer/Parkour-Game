@@ -1,9 +1,11 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public PhotonView view;
 
     //[Header("HeaderName")]
 
@@ -13,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
 
     public float rotationInput;
     public float movementInput;
+
+    public bool online;
 
     // Rigidbogy
     public Rigidbody rb;
@@ -28,12 +32,21 @@ public class PlayerMovement : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
 
+        if (online) view = GetComponent<PhotonView>();
+
         Debug.Log("PlayerMovement.cs loaded successfully");
     }
 
     public void FixedUpdate()
     {
-        if (PI.player == PlayerIdentity.Players.player1)
+        if (online && view.IsMine == false) return;
+
+        if (online)
+        {
+            rotationInput = Input.GetAxis("Horizontal") * rotationSpeed;
+            movementInput = Input.GetAxis("Vertical");
+        }
+        else if (PI.player == PlayerIdentity.Players.player1)
         {
             rotationInput = Input.GetAxis("Horizontal") * rotationSpeed;
             movementInput = Input.GetAxis("Vertical");

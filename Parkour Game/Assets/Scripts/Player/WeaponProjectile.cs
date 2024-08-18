@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class WeaponProjectile : MonoBehaviour
@@ -9,8 +8,13 @@ public class WeaponProjectile : MonoBehaviour
     public float explosionForce = 2f; // Force of the explosion
     public GameObject explosionPrefab; // Prefab of the explosion effect
 
+    public bool online;
+    private PhotonView view;
+
     void Start()
     {
+        if (online) view = GetComponent<PhotonView>();
+
         // Set the initial velocity of the projectile
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.velocity = transform.forward * speed;
@@ -18,11 +22,28 @@ public class WeaponProjectile : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        // Trigger explosion upon collision
-        Explode();
+        // Only the owner handles the collision
+        if (!online || view.IsMine)
+        {
+            Explode();
+        }
     }
 
     void Explode()
+    {
+        // Use RPC to trigger the explosion across all clients
+        if (online)
+        {
+            view.RPC("HandleExplosion", RpcTarget.All);
+        }
+        else
+        {
+            HandleExplosion();
+        }
+    }
+
+    [PunRPC]
+    void HandleExplosion()
     {
         // Instantiate the explosion prefab at the projectile's position
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
@@ -44,7 +65,14 @@ public class WeaponProjectile : MonoBehaviour
             }
         }
 
-        // Destroy the projectile
-        Destroy(gameObject);
+        // Safely destroy the projectile
+        if (online && view.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
+        else if (!online)
+        {
+            Destroy(gameObject);
+        }
     }
 }

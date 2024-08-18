@@ -370,7 +370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 628522303}
-  - component: {fileID: 628522302}
+  - component: {fileID: 628522305}
   - component: {fileID: 628522304}
   m_Layer: 0
   m_Name: Gameplay Manager
@@ -379,42 +379,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &628522302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 628522301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de2a4fc076d634841a6031e172a9c16e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player1Object: {fileID: 0}
-  player2Object: {fileID: 0}
-  player1Prefab: {fileID: 323292249865499472, guid: b733530f9ba1c9e4fa0c678a396a169d, type: 3}
-  player2Prefab: {fileID: 8720087408093076402, guid: 0ab0c5daa14702b4ebf9a514db478580, type: 3}
-  player1Name: 
-  player2Name: 
-  state: 0
-  player1Score: 0
-  player2Score: 0
-  scorePerKill: 0
-  maxScore: 2
-  player1Spawnpoint: {fileID: 1917931712}
-  player2Spawnpoint: {fileID: 1573042036}
-  respawnThreshold: -40
-  playerDied: 
-  playerScored: 
-  timer: 0
-  gameDuration: 65
-  currentTime: 0
-  previousTime: 0
-  displayTime: 
-  scoreText: {fileID: 1491777764}
-  timerText: {fileID: 99973383}
-  alertText: {fileID: 1082417431}
 --- !u!4 &628522303
 Transform:
   m_ObjectHideFlags: 0
@@ -452,6 +416,42 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &628522305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628522301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e33a6c8a4c74294b8511425d16d96dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1ObjectOnline: {fileID: 0}
+  player2ObjectOnline: {fileID: 0}
+  onlinePlayerPrefab: {fileID: 323292249865499472, guid: fd3d9c7b4c659a24f89239ecc8a35cb4, type: 3}
+  player1Name: 
+  player2Name: 
+  state: 0
+  player1Score: 0
+  player2Score: 0
+  scorePerKill: 0
+  maxScore: 0
+  player1Spawnpoint: {fileID: 1917931712}
+  player2Spawnpoint: {fileID: 1573042036}
+  respawnThreshold: -40
+  playerDied: 
+  playerScored: 
+  timer: 0
+  gameDuration: 0
+  currentTime: 0
+  previousTime: 0
+  displayTime: 
+  scoreText: {fileID: 1491777764}
+  timerText: {fileID: 99973383}
+  alertText: {fileID: 1082417431}
+  view: {fileID: 628522304}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
